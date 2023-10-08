@@ -94,7 +94,7 @@ function createGaugeChart(selectedIndividual, metadata) {
   ];
 
   // Define the layout for the gauge chart
-  const layout = { width: 450, height: 300, margin: { t: 0, b: 0 } };
+  const layout = { width: 400, height: 300, margin: { t: 0, b: 0 } };
 
   // Plot the gauge chart
   Plotly.newPlot("gauge", data, layout);
@@ -132,4 +132,4 @@ function displayDemographicInfo(selectedIndividual, metadata) {
   Object.entries(individualMetadata).forEach(([key, value]) => {
     demographicInfo.append("p").text(`${key}: ${value}`);
   });
-}// Get the samples.json
+}
