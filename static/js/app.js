@@ -4,9 +4,8 @@ const samples = 'https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classr
 d3.json(samples).then(function(data) {
   console.log(data);
 });
-// Function to update the charts based on the selected individual
+// Define the function to update the charts based on the selected individual
 function Chart(selectedIndividual) {
-  // Fetch the data from the JSON file
   d3.json("samples.json").then(function(data) {
     // Filter data for the selected individual
     const individualData = data.samples.find(sample => sample.id === selectedIndividual);
@@ -29,19 +28,16 @@ function Chart(selectedIndividual) {
     };
     Plotly.newPlot("bar", [bar1], layout);
 
-    // Call the function to display demographic info
     displayDemographicInfo(selectedIndividual, data.metadata);
-    // Call the function to create the bubble chart
     createBubbleChart(selectedIndividual, data.samples);
-    // Call the function to create the gauge chart
     createGaugeChart(selectedIndividual, data.metadata);
   });
 }
-// Function to create the bubble chart
+// Define the function to create the bubble chart
 function createBubbleChart(selectedIndividual, samplesData) {
   const individualData = samplesData.find(sample => sample.id === selectedIndividual);
 
-  // Define trace for the bubble chart
+  // Define the trace for the bubble chart
   var trace1 = {
     x: individualData.otu_ids,
     y: individualData.sample_values,
@@ -60,15 +56,15 @@ function createBubbleChart(selectedIndividual, samplesData) {
     yaxis: { title: "Sample Values" }
   };
 
-  // Create the bubble chart
+  // Create the bubble chart using plotly
   Plotly.newPlot("bubble", data2, layout2);
 }
 
-// Function to create the gauge chart
+// Define function to create the gauge chart for selected individual
 function createGaugeChart(selectedIndividual, metadata) {
   const individualMetadata = metadata.find(item => item.id === parseInt(selectedIndividual));
 
-  // Define the data for the gauge chart
+  // Define the data for the gauge chart as well as the colors
   const data = [
     {
       domain: { x: [0, 1], y: [0, 1] },
@@ -100,7 +96,7 @@ function createGaugeChart(selectedIndividual, metadata) {
   Plotly.newPlot("gauge", data, layout);
 }
 
-// Define a function to populate the dropdown menu
+// Define the function to populate the dropdown menu
 function Dropdown() {
   d3.json("samples.json").then(function(data) {
     const dropdown = d3.select("#selDataset");
@@ -113,20 +109,18 @@ function Dropdown() {
     updateCharts(initialIndividual);
   });
 }
-// Define a function to handle dropdown change
+// Define the function to handle dropdown change
 function optionChanged(selectedIndividual) {
   // Update the charts when a new individual is selected
   updateCharts(selectedIndividual);
 }
 // Call the dropdown function and initialize the charts
 Dropdown();
-// Function to display demographic info
+
+// Define the function to display demographic info
 function displayDemographicInfo(selectedIndividual, metadata) {
-  // Select the HTML element where you want to display the info
   const demographicInfo = d3.select("#sample-metadata");
-  // Filter metadata for the selected individual
   const individualMetadata = metadata.find(item => item.id === parseInt(selectedIndividual));
-  // Clear any existing data
   demographicInfo.html("");
   // Iterate through the metadata and append key-value pairs
   Object.entries(individualMetadata).forEach(([key, value]) => {
