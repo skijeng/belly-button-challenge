@@ -7,12 +7,12 @@ d3.json(samples).then(function(data) {
 // Define the function to update the charts based on the selected individual
 function Chart(selectedIndividual) {
   d3.json("samples.json").then(function(data) {
-    // Filter data for the selected individual
     const individualData = data.samples.find(sample => sample.id === selectedIndividual);
     // get the top 10 OTUs by sample_values
     const sortedData = individualData.sample_values.slice(0, 10).reverse();
     const otuLabels = individualData.otu_ids.slice(0, 10).map(id => `OTU ${id}`);
     const hoverText = individualData.otu_labels.slice(0, 10);
+    
     // Create the horizontal bar chart
     var bar1 = {
       x: sortedData,
@@ -33,6 +33,7 @@ function Chart(selectedIndividual) {
     createGaugeChart(selectedIndividual, data.metadata);
   });
 }
+
 // Define the function to create the bubble chart
 function createBubbleChart(selectedIndividual, samplesData) {
   const individualData = samplesData.find(sample => sample.id === selectedIndividual);
